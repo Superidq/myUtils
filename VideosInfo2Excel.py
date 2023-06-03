@@ -88,7 +88,7 @@ def get_SpecifiedFrame(filepath, frame_index, output_path):
     image = cv2.resize(image, (width, height), interpolation=cv2.INTER_AREA)
 
     video_name = os.path.basename(filepath)
-    video_basename_no_suffix_name = video_name.split(sep='.')[0]
+    video_basename_no_suffix_name = os.path.splitext(video_name)[0]
 
     # os.sep作用：用于系统路径中的分隔符
     #           Windows系统上，文件的路径分隔符是 '\'
@@ -161,6 +161,7 @@ def append_Excel(append_filepath, video_files_path, frame_index):
     filenames = os.listdir(video_files_path)
 
     for i, filename in enumerate(filenames):
+        # os.path.splitext可专门分离文件名和后缀名，是对'a.b.c'从后往前遇到第一个分隔符便将分离为'a.b'和'.c'两个部分并返回列表
         portion = os.path.splitext(filename)
         if portion[1] == ".mp4":
             # 发现要写进去的数据则更新至下一行
@@ -203,13 +204,14 @@ def append_Excel(append_filepath, video_files_path, frame_index):
 if __name__ == '__main__':
     # 读取文件路径，一般来说路径过长，因此分成两段
     path1 = "D:/Downloads/压缩包/"
-    path2 = "vvv1/"
+    path2 = "vvv/v_test/"
     video_files_path = path1 + path2
 
-    excel_path = "D:/Downloads/压缩包/list.xlsx"
+    excel_path = "D:/Downloads/压缩包/list1.xlsx"
 
     # 如果不存在Excel文件则创建
     if not os.path.isfile(excel_path):
         create_Excel(excel_path)
 
     append_Excel(excel_path, video_files_path, frame_index=65)
+    print("done.")
