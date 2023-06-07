@@ -4,16 +4,19 @@
 """
 import os
 
-filepath_to_find = r'C:\Users\Desktop\someInk\test1'
-filepath_to_delete = r'C:\Users\Desktop\someInk\test2'
+filepath_to_find = r'D:\Downloads'
+filepath_to_delete = r'D:\Downloads\Video'
 
 
 if __name__ == '__main__':
     # 获取to_find目录下所有文件，并特化为指定格式的待删除文件列表
     files_specific = os.listdir(filepath_to_find)
-    for i in range(len(files_specific)):
+    i = 0
+    while i < len(files_specific):
         if os.path.splitext(files_specific[i])[1] != '.mp4':
             files_specific.remove(files_specific[i])
+            i -= 1
+        i += 1
 
     delete_files = os.listdir(filepath_to_delete)
     for name in files_specific:
