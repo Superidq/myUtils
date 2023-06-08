@@ -6,20 +6,7 @@
 
 - Python 3.9
 - Windows 10
-- 安装的各类库的版本如下：
 
-|        Package        | Version  |
-| :-------------------: | :------: |
-|        Pillow         |  9.4.0   |
-|      XlsxWriter       |  3.0.9   |
-|      et-xmlfile       |  1.1.0   |
-|         numpy         |  1.24.2  |
-| opencv-contrib-python | 4.7.0.72 |
-|     opencv-python     | 4.7.0.72 |
-|       openpyxl        |  3.1.2   |
-|          pip          |  23.0.1  |
-|      setuptools       |  57.0.0  |
-|         wheel         |  0.36.2  |
 
 ## 2. 工具集
 
