@@ -163,7 +163,7 @@ def append_Excel(append_filepath, video_files_path, frame_index):
     for i, filename in enumerate(filenames):
         # os.path.splitext可专门分离文件名和后缀名，是对'a.b.c'从后往前遇到第一个分隔符便将分离为'a.b'和'.c'两个部分并返回列表
         portion = os.path.splitext(filename)
-        if portion[1] == ".mp4":
+        if portion[1] == ".mp4" or portion[1] == '.ts':
             # 发现要写进去的数据则更新至下一行
             currentRow += 1
 
@@ -203,8 +203,8 @@ def append_Excel(append_filepath, video_files_path, frame_index):
 
 if __name__ == '__main__':
     # 读取文件路径，一般来说路径过长，因此分成两段
-    path1 = "D:/Downloads/压缩包/"
-    path2 = "vvv/v_test/"
+    path1 = "D:/Downloads"
+    path2 = "/Video/"
     video_files_path = path1 + path2
 
     excel_path = "D:/Downloads/压缩包/list1.xlsx"
