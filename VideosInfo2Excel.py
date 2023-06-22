@@ -75,6 +75,7 @@ def get_SpecifiedFrame(filepath, frame_index, output_path):
     # 读取视频文件
     cap = cv2.VideoCapture(filepath)
     # 从指定帧开始读取文件
+    # TODO:部分场景下出错，需修改，初步定为为openCV中h264解析器，需进一步学习
     cap.set(cv2.CAP_PROP_POS_FRAMES, float(frame_index))
     # 用来记录帧
     res, image = cap.read()
@@ -90,12 +91,8 @@ def get_SpecifiedFrame(filepath, frame_index, output_path):
     video_name = os.path.basename(filepath)
     video_basename_no_suffix_name = os.path.splitext(video_name)[0]
 
-    # os.sep作用：用于系统路径中的分隔符
-    #           Windows系统上，文件的路径分隔符是 '\'
-    #           Linux系统上，文件的路径分隔符是 '/'
-    #           苹果Mac OS系统中是 ':'
-    # cv2.imwrite(output_path + os.sep + video_basename_no_suffix_name + '.png', image)
-    cv2.imencode('.png', image)[1].tofile(output_path + os.sep + video_basename_no_suffix_name + '.png')
+    # os.sep更换为Python建议的os.path.join
+    cv2.imencode('.png', image)[1].tofile(os.path.join(output_path, video_basename_no_suffix_name + '.png'))
 
     cap.release()
 
