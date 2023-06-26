@@ -116,10 +116,9 @@ def renameFile_DEL(filepath, add_position):
 
 
 if __name__ == "__main__":
-    # TODO: 加进度条
     start_time = time.perf_counter()
 
-    path = r'D:\Downloads\test1'
+    path = r'D:\Downloads\test'
     filenames = os.listdir(path)
 
     # 添加魔数位置
@@ -132,35 +131,41 @@ if __name__ == "__main__":
         print(i + " -> ", end='')
 
         file_path = os.path.join(path, i)
-        if mode_add:
-            a = addNumber(file_path, add_position_a)
-            b = addNumber(file_path, add_position_b)
-            c = addNumber(file_path, add_position_c)
-            if a and b and c:
-                renameFile_ADD(file_path, str(add_position_a), str(add_position_b), str(add_position_c))
-            elif a and b and not c:
-                renameFile_ADD(file_path, str(add_position_a), str(add_position_b))
-            elif a and not b:
-                renameFile_ADD(file_path, str(add_position_a))
-            elif not a:
-                print(i + " 文件过小，跳过", end=' ')
 
+        if os.path.isfile(file_path):
+            if mode_add:
+                a = addNumber(file_path, add_position_a)
+                b = addNumber(file_path, add_position_b)
+                c = addNumber(file_path, add_position_c)
+                if a and b and c:
+                    renameFile_ADD(file_path, str(add_position_a), str(add_position_b), str(add_position_c))
+                elif a and b and not c:
+                    renameFile_ADD(file_path, str(add_position_a), str(add_position_b))
+                elif a and not b:
+                    renameFile_ADD(file_path, str(add_position_a))
+                elif not a:
+                    print(i + " 文件过小，跳过", end=' ')
+
+            else:
+                # 顺序倒过来
+                delNumber(file_path, add_position_c)
+                # 更新file_path，方可进入下次
+                file_path = renameFile_DEL(file_path, add_position_c)
+
+                delNumber(file_path, add_position_b)
+                file_path = renameFile_DEL(file_path, add_position_b)
+
+                delNumber(file_path, add_position_a)
+                str1 = (renameFile_DEL(file_path, add_position_a))
+
+                print(os.path.basename(str1), end=' ')
+
+            time_2 = time.perf_counter()
+            print("处理时间：%.5f秒" % (time_2 - time_1))
+        elif os.path.isdir(file_path):
+            print("目录，非文件，跳过")
         else:
-            # 顺序倒过来
-            delNumber(file_path, add_position_c)
-            # 更新file_path，方可进入下次
-            file_path = renameFile_DEL(file_path, add_position_c)
-
-            delNumber(file_path, add_position_b)
-            file_path = renameFile_DEL(file_path, add_position_b)
-
-            delNumber(file_path, add_position_a)
-            str1 = (renameFile_DEL(file_path, add_position_a))
-
-            print(os.path.basename(str1), end=' ')
-
-        time_2 = time.perf_counter()
-        print("处理时间：%.5f秒" % (time_2 - time_1))
+            print("暂不支持此类型，是什么类型？欢迎反馈至'https://github.com/Superidq/myUtils/issues/new'")
 
     end_time = time.perf_counter()
     print("\n done. 总处理时间：%.5f秒" % (end_time - start_time))
