@@ -16,4 +16,5 @@
 | [VideosInfo2Txt.py](https://github.com/Superidq/myUtils/blob/master/VideosInfo2Txt.py) | 把视频文件的文件名导入到一个.txt文件中                       |
 | [compareDelete.py](https://github.com/Superidq/myUtils/blob/master/compareDelete.py) | 删除A目录中的同时出现在两个目录（A、B）中的相应文件          |
 | [addMagicNumber.py](https://github.com/Superidq/myUtils/blob/master/addMagicNumber.py) | 在指定目录下对文件批量修改字节流，在默认位置添加指定魔数并重命名 |
+| [addTextTime.py](https://github.com/Superidq/myUtils/blob/master/addTextTime.py) | 对VideosInfo2Excel.py中文本化表示的时间求和                  |
 
