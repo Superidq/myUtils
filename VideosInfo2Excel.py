@@ -20,6 +20,8 @@ from openpyxl.drawing import image
 
 # 插入图片的列
 image_column = 'E'
+# 临时处理需要用到的文件夹，只需保证本例中前半部分的E:\Downloads路径存在即可，后面的会自动创建并且删除
+temp_path = r'E:\Downloads\temp'
 
 
 def TimeStampToTime(timestamp):
@@ -156,6 +158,7 @@ def append_Excel(append_filepath, video_files_path, frame_index):
     currentRow = sheet.max_row
 
     filenames = os.listdir(video_files_path)
+    allDuration = 0
 
     for i, filename in enumerate(filenames):
         # os.path.splitext可专门分离文件名和后缀名，是对'a.b.c'从后往前遇到第一个分隔符便将分离为'a.b'和'.c'两个部分并返回列表
@@ -167,13 +170,14 @@ def append_Excel(append_filepath, video_files_path, frame_index):
             modifyTime = get_FileModifyTime(video_files_path + filename)
             size = get_FileSize(video_files_path + filename)
             duration = get_FileDuration(video_files_path + filename)
+            allDuration += duration
 
             minutes, seconds = divmod(duration, 60)
             hours, minutes = divmod(minutes, 60)
 
             # 设定截取第几帧
-            get_SpecifiedFrame(video_files_path + filename, frame_index, r'D:\Downloads\temp')
-            image_path = r'D:\Downloads\temp' + os.sep + portion[0] + '.png'
+            get_SpecifiedFrame(video_files_path + filename, frame_index, temp_path)
+            image_path = temp_path + os.sep + portion[0] + '.png'
             img = openpyxl.drawing.image.Image(image_path)
             # position = 'E' + currentRow
             # img.anchor(position)
@@ -195,16 +199,19 @@ def append_Excel(append_filepath, video_files_path, frame_index):
             print(filename)
 
     wbook.save(append_filepath)
-    shutil.rmtree(r'D:\Downloads\temp')
+    shutil.rmtree(temp_path)
+    minutes, seconds = divmod(allDuration, 60)
+    hours, minutes = divmod(minutes, 60)
+    print("视频总时长为：", hours, ":", minutes, ":", seconds, sep='')
 
 
 if __name__ == '__main__':
     # 读取文件路径，一般来说路径过长，因此分成两段
-    path1 = "D:/Downloads"
-    path2 = "/Video/"
+    path1 = "F:/学习/考研/张宇@1000题！武李汤/03.基础30讲/02.高等数学"
+    path2 = "/19.第18讲/"
     video_files_path = path1 + path2
 
-    excel_path = "D:/Downloads/压缩包/list1.xlsx"
+    excel_path = "E:/Downloads/list1.xlsx"
 
     # 如果不存在Excel文件则创建
     if not os.path.isfile(excel_path):
